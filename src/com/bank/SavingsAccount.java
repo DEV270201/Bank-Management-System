@@ -1,10 +1,12 @@
+package com.bank;
+
 public class SavingsAccount extends Account{
-    private static double interestRate;
+    private static final double interestRate;
     private double threshold;
 
     SavingsAccount() {
-        super("", "Savings", 0.0);
-        this.threshold = threshold;
+        super("Savings", 0.0);
+        this.threshold = 100.0;
     }
 
     static {

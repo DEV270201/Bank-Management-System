@@ -1,21 +1,26 @@
+package com.bank;
+import java.util.UUID;
+
+//keep getters and setters as public
+
 public abstract class Account {
     private String accountNumber;
     private String accountType;
     private double accountBalance;
 
-    Account(String accountNumber, String accountType, double accountBalance) {
+    public Account(String accountType, double accountBalance) {
         this.accountBalance = accountBalance;
-        this.accountNumber = accountNumber;
+        this.accountNumber = UUID.randomUUID().toString();
         this.accountType = accountType;
     }
 
-    public void deposit(double amount) {
+    public final void deposit(double amount) {
         this.accountBalance += amount;
         System.out.println("Money deposited successfully!");
         return;
     }
 
-    public abstract void withdraw(double amount);
+    protected abstract void withdraw(double amount);
 
     public void checkAccountBalance(){
         System.out.println("The current balancer for this account: " + this.accountBalance);
@@ -25,6 +30,10 @@ public abstract class Account {
     public void getAccountType(){
         System.out.println("Current Account Type: " + this.accountType);
         return;
+    }
+
+    public String getAccountNumber() {
+        return this.accountNumber;
     }
 
     public double getAccountBalance(){

@@ -1,8 +1,10 @@
-public class CheckingAccount extends Account{
+package com.bank;
+
+public class CheckingAccount extends Account {
     private double overdraftLimit;
 
     CheckingAccount(){
-        super("","Checking",0.0);
+        super("Checking",0.0);
         this.overdraftLimit = 100.0;
     }
 
