@@ -25,4 +25,12 @@ public class CheckingAccount extends Account {
     public double getOverdraftLimit(){
         return this.overdraftLimit;
     }
+
+    @Override
+    void getAccountDetails(){
+        System.out.println("Account ID : " + this.getAccountNumber());
+        System.out.println("Account Type : " + this.getAccountBalance());
+        System.out.println("Account Balance : " + this.getAccountBalance());
+        System.out.println("Account OverDraft Limit : " + this.overdraftLimit);
+    }
 }

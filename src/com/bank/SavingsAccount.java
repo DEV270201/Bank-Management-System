@@ -38,6 +38,15 @@ public class SavingsAccount extends Account{
         return;
     }
 
+    @Override
+    void getAccountDetails(){
+        System.out.println("Account ID : " + this.getAccountNumber());
+        System.out.println("Account Type : " + this.getAccountBalance());
+        System.out.println("Account Balance : " + this.getAccountBalance());
+        System.out.println("Account Threshold : " + this.threshold);
+        System.out.println("Account Interest Rate : " + interestRate);
+    }
+
     //write logic for updating account balance after every some time
 
 }

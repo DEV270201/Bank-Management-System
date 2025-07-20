@@ -47,6 +47,25 @@ public class Customer {
         System.out.println("Your account has been closed successfully!");
     }
 
+    //list accounts
+    void listAccounts() {
+        if(accounts.isEmpty()){
+            System.out.println("No accounts yet....");
+            return;
+        }
+
+        System.out.println("Listing your Accounts: ");
+        int counter = 1;
+        for(String key: accounts.keySet()) {
+            System.out.println(counter + "." + key);
+            counter++;
+        }
+    }
+
+    Account getAccount(String accountNumber){
+        return accounts.get(accountNumber);
+    }
+
     //fetching customer details
     void printCustomerDetails() {
         System.out.println("Customer Details : ");

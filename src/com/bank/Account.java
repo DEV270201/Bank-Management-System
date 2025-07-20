@@ -43,4 +43,6 @@ public abstract class Account {
     public void updateAccountBalance(double amt){
         this.accountBalance = amt;
     }
+
+    abstract void getAccountDetails();
 }
