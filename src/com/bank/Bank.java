@@ -23,13 +23,9 @@ public class Bank {
         System.out.println("Profile created successfully!");
     }
 
-    private static Account getCustomerAccountNumber(Scanner sc, Customer cust){
+    private static String getCustomerAccountNumber(Scanner sc){
         System.out.println("Enter your account number: ");
-        String accountNumber = sc.nextLine();
-        Account account = cust.getAccount(accountNumber);
-        if(account == null)
-            System.out.println("Invalid account number....");
-        return account;
+        return sc.nextLine();
     }
 
     //login into the profile
@@ -56,6 +52,8 @@ public class Bank {
             System.out.println("9. Exit");
             System.out.println("Enter your choice: ");
             int choice = sc.nextInt();
+            String accountNumber;
+            Account account;
 
             switch (choice) {
                 case 1:
@@ -75,18 +73,45 @@ public class Bank {
 
                 case 4:
                     //close an account
+                    accountNumber = getCustomerAccountNumber(sc);
+                    cust.closeBankAccount(accountNumber);
+                    break;
 
-                    
                 case 5:
                     //deposit money
+                    accountNumber = getCustomerAccountNumber(sc);
+                    account = cust.getAccount(accountNumber);
 
+                    if(account == null){
+                        System.out.println("No such account exists in your profile!");
+                        return;
+                    }
+
+                    System.out.println("Enter deposit amount: ");
+                    double depositMoney = sc.nextDouble();
+                    account.deposit(depositMoney);
+                    break;
 
                 case 6:
                     //withdraw money
+                    accountNumber = getCustomerAccountNumber(sc);
+                    account = cust.getAccount(accountNumber);
+
+                    if(account == null){
+                        System.out.println("No such account exists in your profile!");
+                        return;
+                    }
+
+                    System.out.println("Current Account Balance: " + account.getAccountBalance());
+                    System.out.println("Enter withdraw amount: ");
+                    double wihtdrawMoney = sc.nextDouble();
+                    account.withdraw(wihtdrawMoney);
+                    break;
 
                 case 7:
                     //check account balance
-                    Account account = getCustomerAccountNumber(sc,cust);
+                    accountNumber = getCustomerAccountNumber(sc);
+                    account = cust.getAccount(accountNumber);
                     if(account != null){
                         double accountBalance = account.getAccountBalance();
                         System.out.println("Your current account balance is " + accountBalance);
@@ -95,7 +120,8 @@ public class Bank {
 
                 case 8:
                     //check account details
-                   account = getCustomerAccountNumber(sc,cust);
+                   accountNumber = getCustomerAccountNumber(sc);
+                   account = cust.getAccount(accountNumber);
                    if(account != null)
                      account.getAccountDetails();
                    break;
@@ -111,7 +137,5 @@ public class Bank {
             if(choice == 9)
                 break;
         }
-
-        return;
     }
 }

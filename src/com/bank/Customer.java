@@ -30,20 +30,20 @@ public class Customer {
     }
 
     //close a bank account
-    void closeBankAccount(String accntNumber) {
-        if(!accounts.containsKey(accntNumber)){
-            System.out.println("No such Bank Account found on your profile.");
+    void closeBankAccount(String accountNumber) {
+        Account account = getAccount(accountNumber);
+        if(account == null){
+            System.out.println("No such account exists in your profile!");
             return;
         }
 
-        Account closingAccount = accounts.get(accntNumber);
         //close the account only if its balance is greater than zero else throw an error
-        if(!(closingAccount.getAccountBalance() >= 0.0)){
+        if(!(account.getAccountBalance() >= 0.0)){
             System.out.println("Cannot close the account. Negative Balance!.");
             return;
         }
 
-        accounts.remove(accntNumber);
+        accounts.remove(accountNumber);
         System.out.println("Your account has been closed successfully!");
     }
 

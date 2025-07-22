@@ -32,16 +32,20 @@ public class SavingsAccount extends Account{
             return;
         }
 
+        if(amount > 5000.0){
+            System.out.println("Cannot withdraw more than 5000.0");
+            return;
+        }
+
         accntBalance -= amount;
-        updateAccountBalance(accntBalance);
+        this.updateAccountBalance(accntBalance);
         System.out.println("Money withdrawn successfully!");
-        return;
     }
 
     @Override
     void getAccountDetails(){
         System.out.println("Account ID : " + this.getAccountNumber());
-        System.out.println("Account Type : " + this.getAccountBalance());
+        System.out.println("Account Type : " + this.getAccountType());
         System.out.println("Account Balance : " + this.getAccountBalance());
         System.out.println("Account Threshold : " + this.threshold);
         System.out.println("Account Interest Rate : " + interestRate);

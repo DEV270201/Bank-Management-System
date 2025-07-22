@@ -16,6 +16,11 @@ public class CheckingAccount extends Account {
             return;
         }
 
+        if(amt > 5000.0){
+            System.out.println("Cannot withdraw more than 5000.0");
+            return;
+        }
+
         accntBalance =- amt;
         this.updateAccountBalance(accntBalance);
         System.out.println("Money withdrawn successfully!");
@@ -29,7 +34,7 @@ public class CheckingAccount extends Account {
     @Override
     void getAccountDetails(){
         System.out.println("Account ID : " + this.getAccountNumber());
-        System.out.println("Account Type : " + this.getAccountBalance());
+        System.out.println("Account Type : " + this.getAccountType());
         System.out.println("Account Balance : " + this.getAccountBalance());
         System.out.println("Account OverDraft Limit : " + this.overdraftLimit);
     }

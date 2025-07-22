@@ -15,32 +15,35 @@ public abstract class Account {
     }
 
     public final void deposit(double amount) {
+        //check at a time, a person can deposit no more than 5000 in a single transaction
+        if(amount > 5000.0){
+            System.out.println("Cannot deposit more than 5000.0");
+            return;
+        }
         this.accountBalance += amount;
         System.out.println("Money deposited successfully!");
-        return;
     }
 
     protected abstract void withdraw(double amount);
 
-    public void checkAccountBalance(){
+    protected void checkAccountBalance(){
         System.out.println("The current balancer for this account: " + this.accountBalance);
         return;
     }
 
-    public void getAccountType(){
-        System.out.println("Current Account Type: " + this.accountType);
-        return;
+    protected String getAccountType(){
+        return this.accountType;
     }
 
-    public String getAccountNumber() {
+    protected String getAccountNumber() {
         return this.accountNumber;
     }
 
-    public double getAccountBalance(){
+    protected double getAccountBalance(){
         return this.accountBalance;
     }
 
-    public void updateAccountBalance(double amt){
+    protected void updateAccountBalance(double amt){
         this.accountBalance = amt;
     }
 
