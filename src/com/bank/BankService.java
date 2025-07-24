@@ -3,9 +3,9 @@ package com.bank;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Bank {
+public class BankService {
     public HashMap<String,Customer> people;
-    Bank(){
+    BankService(){
         people = new HashMap<String,Customer>();
     }
 

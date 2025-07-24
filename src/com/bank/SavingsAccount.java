@@ -1,5 +1,9 @@
 package com.bank;
 
+import com.bank.exception.BankingException;
+import com.bank.exception.ExceedWithdrawalException;
+import com.bank.exception.InsufficientBalance;
+
 public class SavingsAccount extends Account{
     private static final double interestRate;
     private double threshold;
@@ -21,20 +25,20 @@ public class SavingsAccount extends Account{
         return this.threshold;
     }
 
-    public void withdraw(double amount) {
+    @Override
+    public void withdraw(double amount) throws BankingException {
         double accntBalance = getAccountBalance();
         if(accntBalance <= threshold){
             System.out.println("Sorry cannot withdraw. Threshold balance reached!");
             return;
         }
+
         if(accntBalance - amount <= 0){
-            System.out.println("Insufficient money to withdraw!");
-            return;
+            throw new InsufficientBalance("Insufficient money to withdraw!", "INSUFF_ACC_BAL", accntBalance, amount);
         }
 
-        if(amount > 5000.0){
-            System.out.println("Cannot withdraw more than 5000.0");
-            return;
+        if(amount > this.withdrawalLimit){
+            throw new ExceedWithdrawalException(String.format("Cannot withdraw more than %.2f",this.withdrawalLimit),"EXCEED_WIT_LIMIT",amount,this.withdrawalLimit);
         }
 
         accntBalance -= amount;

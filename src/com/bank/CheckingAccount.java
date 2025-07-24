@@ -1,5 +1,8 @@
 package com.bank;
 
+import com.bank.exception.BankingException;
+import com.bank.exception.ExceedWithdrawalException;
+
 public class CheckingAccount extends Account {
     private double overdraftLimit;
 
@@ -8,7 +11,8 @@ public class CheckingAccount extends Account {
         this.overdraftLimit = 100.0;
     }
 
-    public void withdraw(double amt) {
+    @Override
+    public void withdraw(double amt) throws BankingException {
         double accntBalance = getAccountBalance();
         //not letting the accnt balance to fall below overdraft limit
         if(accntBalance - amt + overdraftLimit < 0){
@@ -16,15 +20,13 @@ public class CheckingAccount extends Account {
             return;
         }
 
-        if(amt > 5000.0){
-            System.out.println("Cannot withdraw more than 5000.0");
-            return;
+        if(amt > this.withdrawalLimit){
+            throw new ExceedWithdrawalException(String.format("Cannot withdraw more than %.2f",this.withdrawalLimit),"EXCEED_WIT_LIMIT",amt,this.withdrawalLimit);
         }
 
         accntBalance =- amt;
         this.updateAccountBalance(accntBalance);
         System.out.println("Money withdrawn successfully!");
-        return;
     }
 
     public double getOverdraftLimit(){
