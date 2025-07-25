@@ -29,8 +29,7 @@ public class SavingsAccount extends Account{
     public void withdraw(double amount) throws BankingException {
         double accntBalance = getAccountBalance();
         if(accntBalance <= threshold){
-            System.out.println("Sorry cannot withdraw. Threshold balance reached!");
-            return;
+            throw new BankingException("Sorry cannot withdraw. Threshold balance reached!", "BANK_EXC");
         }
 
         if(accntBalance - amount <= 0){

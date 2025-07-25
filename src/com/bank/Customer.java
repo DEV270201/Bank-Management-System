@@ -1,5 +1,6 @@
 package com.bank;
 import com.bank.exception.AccountNotFoundException;
+import com.bank.exception.BankingException;
 
 import java.util.UUID;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class Customer {
     }
 
     //close a bank account
-    void closeBankAccount(String accountNumber) throws AccountNotFoundException {
+    void closeBankAccount(String accountNumber) throws BankingException {
         Account account = getAccount(accountNumber);
         if(account == null){
             throw new AccountNotFoundException("No such account exists in your profile!", "ACC_NOT_FOUND", accountNumber);
@@ -40,8 +41,7 @@ public class Customer {
 
         //close the account only if its balance is greater than zero else throw an error
         if(!(account.getAccountBalance() >= 0.0)){
-            System.out.println("Cannot close the account. Negative Balance!.");
-            return;
+            throw new BankingException("Cannot close the account. Negative Balance!.","BANK_EXC");
         }
 
         accounts.remove(accountNumber);

@@ -1,5 +1,7 @@
 package com.bank;
 
+import com.bank.exception.*;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -73,57 +75,103 @@ public class BankService {
 
                 case 4:
                     //close an account
+                    try{
                     accountNumber = getCustomerAccountNumber(sc);
                     cust.closeBankAccount(accountNumber);
+                    }catch (AccountNotFoundException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("ACC No: " + err.getAccountNumber());
+                    }
+                    catch(BankingException err){
+                        System.out.println(err.getErrorMessage());
+                    }
                     break;
 
                 case 5:
                     //deposit money
+                    try{
                     accountNumber = getCustomerAccountNumber(sc);
                     account = cust.getAccount(accountNumber);
 
                     if(account == null){
-                        System.out.println("No such account exists in your profile!");
-                        return;
+                        throw new AccountNotFoundException("No such account exists in your profile!","ACC_NOT_FOUND",accountNumber);
                     }
 
                     System.out.println("Enter deposit amount: ");
                     double depositMoney = sc.nextDouble();
                     account.deposit(depositMoney);
+                    }
+                    catch (ExceedDepositException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("Deposit Limit: " + err.getDepositLimit() + ". Money deposit: " + err.getTotalAmount());
+                    }
+                    catch (BankingException err){
+                        System.out.println(err.getErrorMessage());
+                    }
                     break;
 
                 case 6:
                     //withdraw money
+                    try{
                     accountNumber = getCustomerAccountNumber(sc);
                     account = cust.getAccount(accountNumber);
 
                     if(account == null){
-                        System.out.println("No such account exists in your profile!");
-                        return;
+                        throw new AccountNotFoundException("No such account exists in your profile!", "ACC_NOT_FOUND", accountNumber);
                     }
 
                     System.out.println("Current Account Balance: " + account.getAccountBalance());
                     System.out.println("Enter withdraw amount: ");
                     double wihtdrawMoney = sc.nextDouble();
                     account.withdraw(wihtdrawMoney);
+                    }catch (InsufficientBalance err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("Available Balance: " + err.getAvailableBalance() + ". Money requested: " + err.getMoneyRequested());
+                    }catch (AccountNotFoundException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("ACC No: " + err.getAccountNumber());
+                    }catch(ExceedWithdrawalException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("Withdrawal limit: " + err.getWithdrawLimit() + ". Money withdraw: " + err.getTotalAmount());
+                    }catch(BankingException err){
+                        System.out.println(err.getErrorMessage());
+                    }
                     break;
 
                 case 7:
                     //check account balance
+                    try{
                     accountNumber = getCustomerAccountNumber(sc);
                     account = cust.getAccount(accountNumber);
-                    if(account != null){
-                        double accountBalance = account.getAccountBalance();
-                        System.out.println("Your current account balance is " + accountBalance);
+
+                    if(account == null){
+                        throw new AccountNotFoundException("Account not found!","ACC_NOT_FOUND",accountNumber);
+                    }
+
+                    double accountBalance = account.getAccountBalance();
+                    System.out.println("Your current account balance is " + accountBalance);
+
+                    }catch (AccountNotFoundException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("ACC No: " + err.getAccountNumber());
                     }
                     break;
 
                 case 8:
                     //check account details
+                    try{
                    accountNumber = getCustomerAccountNumber(sc);
                    account = cust.getAccount(accountNumber);
-                   if(account != null)
-                     account.getAccountDetails();
+
+                   if(account == null){
+                       throw new AccountNotFoundException("Account not found!","ACC_NOT_FOUND",accountNumber);
+                   }
+                   account.getAccountDetails();
+
+                   }catch (AccountNotFoundException err){
+                        System.out.println(err.getErrorMessage());
+                        System.out.println("ACC No: " + err.getAccountNumber());
+                   }
                    break;
 
                 case 9:

@@ -16,8 +16,7 @@ public class CheckingAccount extends Account {
         double accntBalance = getAccountBalance();
         //not letting the accnt balance to fall below overdraft limit
         if(accntBalance - amt + overdraftLimit < 0){
-            System.out.println("Sorry, cannot withdraw. Overdraft limit will exceed!");
-            return;
+            throw new BankingException("Sorry, cannot withdraw. Overdraft limit will exceed!", "BANK_EXC");
         }
 
         if(amt > this.withdrawalLimit){
